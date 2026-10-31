@@ -28,10 +28,33 @@ while True:
          print("Assignment Added")
 
     elif choice =="3":
-            for assign in assignments:
-                print(assignment_info['Name'])
-                print(assignment_info['Course'])
-                print(assignment_info['Due Date'])
-                print(assignment_info['Completed'])     
+            print("Current Assignments:")
+            print()
+            for number, assignment in enumerate(assignments, start = 1):
+                print(number, assignment['Name'])
+                print(assignment['Course'])
+                print(assignment['Due Date'])
+                print(assignment['Completed']) 
+                print()
 
-        
+    elif choice == "2":
+        if len(assignments) == 0:
+            print("No assignments to remove!")
+
+        else:
+            for number, assignment in enumerate(assignments, start=1):
+                print(number, assignment["Name"])
+
+            try:
+                remove_number = int(input("What number do you want to remove? \n"))
+
+                if 1 <= remove_number <= len(assignments):
+                    assignments.pop(remove_number - 1)
+                    print("Assignment removed!")
+
+                else:
+                    print("Assignment not found, try again!")
+
+            except ValueError:
+                print("Invalid input! Please enter a number.")
+
