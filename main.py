@@ -4,9 +4,10 @@ while True:
     print("1. Add Asignment")
     print("2. Remove Asignment")
     print("3. View Assignments")
-    print("4. Check Grades")
-    print("5. View Upcoming Deadlines")
-    print("6. Exit")
+    print("4. Mark Assignments Complete")
+    print("5. Check Grades")
+    print("6. View Upcoming Deadlines")
+    print("7. Exit")
 
 
     choice = (input("Select a number \n"))
@@ -57,4 +58,30 @@ while True:
 
             except ValueError:
                 print("Invalid input! Please enter a number.")
+
+    elif choice == "4":
+        while True:
+            if len(assignments) == 0:
+                print("No assignments to mark complete!")
+                break
+            else:
+                for number, assignment in enumerate(assignments, start=1):
+                    print()
+                    print(number, assignment["Name"])
+                    print(assignment['Completed'])
+
+                try:
+                    change_status = int(input("Which assignment do you want to mark complete?"))
+                    if 1<= change_status <= len(assignments):
+                        assignments[change_status - 1]["Completed"] = True
+                        print(f"Assignment {change_status} marked as done!")
+                    else:
+                        print("Assignment not found")
+                    repeat = input("Do you have another assignment to mark complete? Y/N").lower()
+                    if repeat != "y":
+                        break
+                except ValueError:
+                    print("invalid input! Please enter a number.")                    
+        
+
 
