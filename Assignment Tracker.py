@@ -1,5 +1,12 @@
+import json
+try:
+    with open("assignments.json", "r") as f:
+                assignments = json.load(f)
+except FileNotFoundError:
+    assignments = []
+     
 print("----------STUDENT ASSIGNMENT MANAGER----------")
-assignments = []
+
 while True:
     print("1. Add Asignment")
     print("2. Remove Asignment")
@@ -12,7 +19,7 @@ while True:
 
     choice = (input("Select a number \n"))
 
-    if choice == "6":
+    if choice == "7":
         print("Goodbye")
         break
 
@@ -26,6 +33,8 @@ while True:
                             "Completed": False
                             }
          assignments.append(assignment_info)
+         with open("assignments.json", "w") as f:
+             json.dump(assignments, f, indent = 2)
          print("Assignment Added")
 
     elif choice =="3":
@@ -51,6 +60,9 @@ while True:
 
                 if 1 <= remove_number <= len(assignments):
                     assignments.pop(remove_number - 1)
+                    with open("assignments.json", "w") as f:
+                        json.dump(assignments, f, indent = 2)
+
                     print("Assignment removed!")
 
                 else:
@@ -74,6 +86,8 @@ while True:
                     change_status = int(input("Which assignment do you want to mark complete?"))
                     if 1<= change_status <= len(assignments):
                         assignments[change_status - 1]["Completed"] = True
+                        with open("assignments.json", "w") as f:
+                            json.dump(assignments, f, indent = 2)
                         print(f"Assignment {change_status} marked as done!")
                     else:
                         print("Assignment not found")
