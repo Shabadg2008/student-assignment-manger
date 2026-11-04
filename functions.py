@@ -9,8 +9,7 @@ def add_assigments(assignments):
                           "Completed": False
                                     }
         assignments.append(assignment_info)
-        with open("assignments.json", "w") as f:
-            json.dump(assignments, f, indent = 2)
+        save_assignments(assignments)
         print("Assignment Added")  
 
 def remove_assigments(assignments):
@@ -27,8 +26,7 @@ def remove_assigments(assignments):
         
                         if 1 <= remove_number <= len(assignments):
                             assignments.pop(remove_number - 1)
-                            with open("assignments.json", "w") as f:
-                                json.dump(assignments, f, indent = 2)
+                            save_assignments(assignments)
         
                             print("Assignment removed!")
         
@@ -49,6 +47,7 @@ def view_assigments(assignments):
          print()
 
 def mark_assignments_complete(assignments):
+          
           while True:
                   if len(assignments) == 0:
                       print("No assignments to mark complete!")
@@ -60,16 +59,19 @@ def mark_assignments_complete(assignments):
                           print(assignment['Completed'])
       
                       try:
-                          change_status = int(input("Which assignment do you want to mark complete?"))
+                          change_status = int(input("Which assignment do you want to mark complete?\n"))
                           if 1<= change_status <= len(assignments):
                               assignments[change_status - 1]["Completed"] = True
-                              with open("assignments.json", "w") as f:
-                                  json.dump(assignments, f, indent = 2)
+                              save_assignments(assignments)
                               print(f"Assignment {change_status} marked as done!")
                           else:
                               print("Assignment not found")
-                          repeat = input("Do you have another assignment to mark complete? Y/N").lower()
+                          repeat = input("Do you have another assignment to mark complete? Y/N\n").lower()
                           if repeat != "y":
                               break
                       except ValueError:
                           print("invalid input! Please enter a number.")  
+
+def save_assignments(assignments):
+     with open("assignments.json", "w") as f:
+        json.dump(assignments, f, indent = 2)
