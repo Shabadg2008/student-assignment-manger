@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 def add_assigments(assignments):
         name = input("Enter name of assignment \n")
         course_name = input("Enter course name \n")
@@ -75,3 +76,12 @@ def mark_assignments_complete(assignments):
 def save_assignments(assignments):
      with open("assignments.json", "w") as f:
         json.dump(assignments, f, indent = 2)
+
+def days_remaining(assignments):
+      Current_Date = datetime.now().date()
+      for number, assignment in enumerate(assignments, start=1):
+            Due_Date = datetime.strptime(assignment['Due Date'], "%m-%d-%Y").date()
+            Remaining_Time = Due_Date - Current_Date
+            print(number, assignment["Name"])
+            print(f"Due in {Remaining_Time.days} Days")
+      
