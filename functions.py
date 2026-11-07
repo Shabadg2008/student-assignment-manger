@@ -83,5 +83,11 @@ def days_remaining(assignments):
             Due_Date = datetime.strptime(assignment['Due Date'], "%m-%d-%Y").date()
             Remaining_Time = Due_Date - Current_Date
             print(number, assignment["Name"])
-            print(f"Due in {Remaining_Time.days} Days")
+            if Remaining_Time.days == 0:
+                  print("Due today!")
+            elif Remaining_Time.days < 0:
+                  overdue_date = abs(Remaining_Time.days)
+                  print(f"Overdue by {overdue_date} Days!")
+            else:
+                print(f"Due in {Remaining_Time.days} Days")
       
