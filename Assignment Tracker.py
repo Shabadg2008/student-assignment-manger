@@ -39,7 +39,7 @@ while True:
     elif choice == "6":
         days_remaining(assignments)
 
-    elif choice == "7":
+    elif choice == "5":
          view_grades(assignments)                    
         
 
