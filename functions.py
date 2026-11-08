@@ -7,7 +7,8 @@ def add_assigments(assignments):
         assignment_info = {"Name": name,
                           "Course": course_name,
                           "Due Date": due,
-                          "Completed": False
+                          "Completed": False,
+                          "Grade": None
                                     }
         assignments.append(assignment_info)
         save_assignments(assignments)
@@ -78,16 +79,52 @@ def save_assignments(assignments):
         json.dump(assignments, f, indent = 2)
 
 def days_remaining(assignments):
-      Current_Date = datetime.now().date()
-      for number, assignment in enumerate(assignments, start=1):
-            Due_Date = datetime.strptime(assignment['Due Date'], "%m-%d-%Y").date()
-            Remaining_Time = Due_Date - Current_Date
-            print(number, assignment["Name"])
-            if Remaining_Time.days == 0:
-                  print("Due today!")
-            elif Remaining_Time.days < 0:
-                  overdue_date = abs(Remaining_Time.days)
-                  print(f"Overdue by {overdue_date} Days!")
-            else:
-                print(f"Due in {Remaining_Time.days} Days")
-      
+      try:
+        Current_Date = datetime.now().date()
+        incomplete_assignments = [
+        x for x in assignments if not x["Completed"]
+    ]
+        if len(incomplete_assignments) == 0:
+            print("No incomplete assignments!")
+            return
+        sorted_assignments = sorted(assignments, key = lambda x: datetime.strptime(x["Due Date"]," %m-%d-%Y"))
+        for number, assignment in enumerate(sorted_assignments, start=1):
+                if assignment["Completed"] == True:
+                    continue
+                else:
+                    Due_Date = datetime.strptime(assignment['Due Date'], "%m-%d-%Y").date()
+                    Remaining_Time = Due_Date - Current_Date
+                    print(number, assignment["Name"])
+                    if Remaining_Time.days == 0:
+                        print("Due today!")
+                    elif Remaining_Time.days < 0:
+                        overdue_date = abs(Remaining_Time.days)
+                        print(f"Overdue by {overdue_date} Days!")
+                    else:
+                        print(f"Due in {Remaining_Time.days} Days")
+      except ValueError:
+           print("Invalid entry!")
+        
+def view_grades(assignments):
+     print("----Grade Tracker ----")
+     print()
+     print("1. Add or Update Grade")
+     print("2. View Grades")
+     print("3. Calculate Average")
+     print("4. Return to Menu")
+
+     while True:
+        choice = input("Select an option, 1-4 \n")
+        if choice == "1":
+            Ans1 = input("Do you want to add or remove an assignment? \n")
+        elif choice == "3":
+            print("Average Grades")
+        elif choice == "2":
+            print("Grades: ")
+        elif choice == "4":
+            break
+        else:
+            print("Invalid Option, Try again!")
+             
+             
+          

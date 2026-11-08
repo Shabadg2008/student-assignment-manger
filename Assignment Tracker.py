@@ -1,5 +1,5 @@
 import json
-from functions import add_assigments, remove_assigments, mark_assignments_complete, view_assigments, days_remaining
+from functions import add_assigments, remove_assigments, mark_assignments_complete, view_assigments, days_remaining, view_grades
 try:
     with open("assignments.json", "r") as f:
                 assignments = json.load(f)
@@ -38,7 +38,9 @@ while True:
 
     elif choice == "6":
         days_remaining(assignments)
-                    
+
+    elif choice == "7":
+         view_grades(assignments)                    
         
 
 
