@@ -108,23 +108,46 @@ def days_remaining(assignments):
 def view_grades(assignments):
      print("----Grade Tracker ----")
      print()
-     print("1. Add or Update Grade")
-     print("2. View Grades")
-     print("3. Calculate Average")
-     print("4. Return to Menu")
+     print("1. Add Grade")
+     print("2. Update Grade")
+     print("3. View Grades")
+     print("4. Calculate Average")
+     print("5. Return to Menu")
 
      while True:
-        choice = input("Select an option, 1-4 \n")
-        if choice == "1":
-            Ans1 = input("Do you want to add or remove an assignment? \n")
-        elif choice == "3":
-            print("Average Grades")
-        elif choice == "2":
-            print("Grades: ")
-        elif choice == "4":
-            break
-        else:
-            print("Invalid Option, Try again!")
-             
-             
-          
+        for number, assignment in enumerate(assignments, start=1):
+            print(number, assignment["Name"])
+        choice = int(input("Select an option, 1-4 \n"))
+        if choice == 1:
+             select = int(input("Which assignment do you want to grade? \n"))
+             if 1 <= select <= len(assignments):
+                  new_grade = float(input("Enter a grade 0-100: \n"))
+                  if 0 <= new_grade <= 100:
+                    assignment[select - 1]["Grade"] = new_grade
+                    save_assignments(assignments)
+                    print("Grade Saved")
+                  else:
+                    print("Invalid Grade")
+             else:
+                print("Not an assignment!")
+        elif choice == 2:
+             update = int(input("Which assignments grade do you want to update? \n"))
+             if 1 <= update <= len(assignments):
+                  updated_grade = float(input("Enter your updated grade: \n"))
+                  if 0 <= updated_grade <= 100:
+                       assignment[update-1]["Grade"] = updated_grade
+                       save_assignments(assignments)
+                       print("Grade Updated")
+                  else:
+                       print("Invalid Grade, Try again!")
+             else:
+                  print("Not an Assignment!")
+        elif choice == 3:
+             for number, assignment in enumerate(assignments, start =1):
+                  grade = assignment.get("Grade")  
+                  if grade is None:
+                    print(f"{number}. {assignment["Name"]}: No Grade Yet")
+                  else:
+                    print(f"{number}. {assignment["Name"]}: {grade}%")
+                
+                    
