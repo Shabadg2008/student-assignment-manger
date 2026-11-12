@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 def add_assigments(assignments):
+    try:
         name = input("Enter name of assignment \n")
         course_name = input("Enter course name \n")
         due = input("Enter due date (month-day-year) \n") 
@@ -13,25 +14,26 @@ def add_assigments(assignments):
         assignments.append(assignment_info)
         save_assignments(assignments)
         print("Assignment Added")  
+    except ValueError:
+        print("Please enter a valid input!")
 
-def remove_assigments(assignments):
+def remove_assigments(assignments):  
+    if len(assignments) == 0:
+        print("No assignments to remove!")
         
-        if len(assignments) == 0:
-            print("No assignments to remove!")
-        
-        else:
+    else:
+        try:
             for number, assignment in enumerate(assignments, start=1):
-                print(number, assignment["Name"])
-                try:
-                    remove_number = int(input("What number do you want to remove? \n"))
-                    if 1 <= remove_number <= len(assignments):
-                        assignments.pop(remove_number - 1)
-                        save_assignments(assignments)
-                        print("Assignment removed!")
-                    else:
-                        print("Assignment not found, try again!")
-                except ValueError:
-                    print("Enter a valid number")
+                        print(number, assignment["Name"])
+            remove_number = int(input("What number do you want to remove? \n"))
+            if 1 <= remove_number <= len(assignments):
+                assignments.pop(remove_number - 1)
+                save_assignments(assignments)
+                print("Assignment removed!")
+            else:
+                print("Assignment not found, try again!")
+        except ValueError:
+            print("Enter a valid number")
 
 def view_assigments(assignments):
     print("Current Assignments:")
@@ -80,7 +82,10 @@ def days_remaining(assignments):
         if len(incomplete_assignments) == 0:
             print("No incomplete assignments!")
             return
-        sorted_assignments = sorted(assignments, key = lambda x: datetime.strptime(x["Due Date"]," %m-%d-%Y"))
+        sorted_assignments = sorted(
+        incomplete_assignments,
+        key=lambda x: datetime.strptime(x["Due Date"], "%m-%d-%Y")
+)
         for number, assignment in enumerate(sorted_assignments, start=1):
             if assignment["Completed"] == True:
                 continue
@@ -94,7 +99,7 @@ def days_remaining(assignments):
                     overdue_date = abs(Remaining_Time.days)
                     print(f"Overdue by {overdue_date} Days!")
                 else:
-                    print(f"Due in {Remaining_Time.days} Days")
+                    print(f"Due in {Remaining_Time.days} Day(s)")
       except ValueError:
            print("Invalid entry!")
         
@@ -108,8 +113,10 @@ def view_grades(assignments):
         print("4. Calculate Average")
         print("5. Return to Menu")
 
-     
+        print()
+        print("Current assignments:")
         for number, assignment in enumerate(assignments, start=1):
+    
             print(number, assignment["Name"])
         try:
             choice = int(input("Select an option, 1-5 \n"))

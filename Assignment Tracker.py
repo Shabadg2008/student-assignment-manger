@@ -21,7 +21,7 @@ while True:
     choice = (input("Select a number \n"))
 
     if choice == "7":
-        print("Goodbye")
+        print("Goodbye!")
         break
 
     elif choice == "1":
